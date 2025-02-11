@@ -1,11 +1,11 @@
 const itemsData = [
-    { id: 1, name: "ドラゴン Lv.0", tags: ["evo_dragon_0"], image: "img/dragon0.jpg" },
-    { id: 2, name: "ドラゴン Lv.1", tags: ["evo_dragon_1"], image: "img/dragon1.jpg" },
-    { id: 3, name: "ドラゴン Lv.2", tags: ["evo_dragon_2"], image: "img/dragon2.jpg" },
+    { id: 1, name: "フシギダネ", tags: ["evo_フシギダネ_0"], image: "cardimg/SIK-001.png" },
+    { id: 2, name: "フシギソウ", tags: ["evo_フシギダネ_1"], image: "cardimg/SIK-002.png" },
+    { id: 3, name: "フシギバナ", tags: ["evo_フシギダネ_2"], image: "cardimg/SIK-003.png" },
     { id: 4, name: "フェニックス Lv.0", tags: ["evo_phoenix_0"], image: "img/phoenix0.jpg" },
-    { id: 5, name: "フェニックス Lv.1", tags: ["evo_phoenix_1"], image: "img/phoenix1.jpg" },
-    { id: 6, name: "フェニックス Lv.2", tags: ["evo_phoenix_2"], image: "img/phoenix2.jpg" },
-    { id: 7, name: "ドラゴン Lv.1 (別バージョン)", tags: ["evo_dragon_1"], image: "img/dragon1_alt.jpg" }
+    { id: 5, name: "キャタピー", tags: ["evo_キャタピー_0"], image: "cardimg/SIK-005.png" },
+    { id: 6, name: "トランセル", tags: ["evo_キャタピー_1"], image: "cardimg/SIK-006.png" },
+    { id: 7, name: "バタフリー", tags: ["evoキャタピー_2"], image: "cardimg/SIK-007.png" }
 ];
 
 const itemContainer = document.getElementById("item-container");
