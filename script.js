@@ -9,19 +9,19 @@ const itemsData = [
 ];
 
 const itemContainer = document.getElementById("item-container");
-const relatedContainer = document.getElementById("related-container");
 
-// アイテムを生成して表示
+// メイン画面にカードを表示
 function renderItems() {
     itemContainer.innerHTML = "";
     itemsData.forEach(item => {
         const div = createItemElement(item);
-        div.onclick = () => selectItem(item);
+        // カードクリック時にオーバーレイを開く
+        div.onclick = () => openOverlay(item);
         itemContainer.appendChild(div);
     });
 }
 
-// アイテム要素を作成
+// カード要素を生成する共通関数
 function createItemElement(item) {
     const div = document.createElement("div");
     div.classList.add("item");
@@ -29,6 +29,9 @@ function createItemElement(item) {
     const img = document.createElement("img");
     img.src = item.image;
     img.alt = item.name;
+    // ※CSSでサイズ指定しているため、こちらのスタイル指定は任意です
+    img.style.width = "70px";
+    img.style.height = "auto";
 
     const name = document.createElement("p");
     name.textContent = item.name;
@@ -39,44 +42,50 @@ function createItemElement(item) {
     return div;
 }
 
-// アイテム選択時の処理
-function selectItem(selectedItem) {
-    itemContainer.innerHTML = "";
-    relatedContainer.innerHTML = "";
-    relatedContainer.style.display = "grid";
+// オーバーレイを開く関数
+function openOverlay(selectedItem) {
+    const overlay = document.getElementById("overlay");
+    const overlaySelectedContainer = document.getElementById("overlay-selected-container");
+    const overlayRelatedContainer = document.getElementById("overlay-related-container");
 
-    // 選択アイテムを表示
+    // 前回の内容をクリア
+    overlaySelectedContainer.innerHTML = "";
+    overlayRelatedContainer.innerHTML = "";
+
+    // 選んだカードを上部に追加
     const selectedDiv = createItemElement(selectedItem);
     selectedDiv.classList.add("selected");
-    itemContainer.appendChild(selectedDiv);
+    overlaySelectedContainer.appendChild(selectedDiv);
 
-    // 関連アイテムを取得
+    // 関連（進化系統）カードを取得して下部に追加
     const relatedItems = getRelatedItems(selectedItem);
-
-    // 関連アイテムを表示
     relatedItems.forEach(item => {
         const div = createItemElement(item);
         div.classList.add("related-item");
-        div.onclick = () => selectItem(item);
-        relatedContainer.appendChild(div);
+        // 関連カードクリックでそのカードのオーバーレイを再表示
+        div.onclick = () => openOverlay(item);
+        overlayRelatedContainer.appendChild(div);
     });
+
+    // オーバーレイを表示
+    overlay.classList.remove("hidden");
 }
 
-// 関連アイテムを取得
+// 進化系統（関連カード）を取得する関数
 function getRelatedItems(selectedItem) {
     // evo_タグを取得
     const evoTag = selectedItem.tags.find(tag => tag.startsWith("evo_"));
     if (!evoTag) return [];
 
-    // 進化名（例: "dragon"）を取得
+    // 進化名（例："フシギダネ"）を取得
     const evoBase = evoTag.split("_")[1];
 
-    // 同じ進化名を持つアイテムを取得
-    const related = itemsData.filter(item => 
+    // 同じ進化名を持つカードを抽出
+    const related = itemsData.filter(item =>
         item.tags.some(tag => tag.startsWith(`evo_${evoBase}_`))
     );
 
-    // レベルごとにidの小さいアイテムを代表として選択
+    // レベルごとにidの小さいカードを代表として選択
     const uniqueRelated = {};
     related.forEach(item => {
         const level = parseInt(item.tags[0].split("_")[2], 10);
@@ -88,6 +97,11 @@ function getRelatedItems(selectedItem) {
     // 0 → 1 → 2 の順に並べて返す
     return [0, 1, 2].map(level => uniqueRelated[level]).filter(Boolean);
 }
+
+// 閉じるボタンの処理
+document.getElementById("close-btn").addEventListener("click", function() {
+    document.getElementById("overlay").classList.add("hidden");
+});
 
 // 初期表示
 renderItems();
