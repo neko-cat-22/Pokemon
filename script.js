@@ -5,7 +5,7 @@ const itemsData = [
     { id: 4, name: "フェニックス Lv.0", tags: ["evo_phoenix_0"], image: "img/phoenix0.jpg" },
     { id: 5, name: "キャタピー", tags: ["evo_キャタピー_0"], image: "cardimg/SIK-005.png" },
     { id: 6, name: "トランセル", tags: ["evo_キャタピー_1"], image: "cardimg/SIK-006.png" },
-    { id: 7, name: "バタフリー", tags: ["evoキャタピー_2"], image: "cardimg/SIK-007.png" }
+    { id: 7, name: "バタフリー", tags: ["evo_キャタピー_2"], image: "cardimg/SIK-007.png" }
 ];
 
 const itemContainer = document.getElementById("item-container");
